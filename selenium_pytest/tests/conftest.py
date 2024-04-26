@@ -47,3 +47,27 @@ def setup_up_and_teardown(webdriver, request) -> None:
     yield
     webdriver.quit_driver()
 
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item):
+    # execute all other hooks to obtain the report object
+    outcome = yield
+    rep = outcome.get_result()
+
+    # if test failed
+    if rep.when == "call" and rep.failed:
+        try:
+            # Accessing the fixture from the test
+            driver = item.funcargs['webdriver'].driver
+        except KeyError:
+            logging.log(1, "No driver fixture found, skip taking screenshot")
+            # No driver fixture found, skip taking screenshot
+            return
+
+        # Take screenshot
+        try:
+            screenshot_path = f"screenshots/screenshot_{item.name}.png"
+            driver.save_screenshot(screenshot_path)
+            print(f"\nScreenshot saved as {screenshot_path}")
+        except Exception as e:
+            print(f"\nFailed to capture screenshot: {str(e)}")

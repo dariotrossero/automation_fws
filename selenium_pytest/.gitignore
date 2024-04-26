@@ -8,3 +8,4 @@ tests/allure-results
 conf/*.env
 *.log
 .pytest_cache
+tests/screenshots

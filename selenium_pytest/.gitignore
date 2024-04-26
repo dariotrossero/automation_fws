@@ -1,0 +1,10 @@
+allure-reports/
+tests/videos/*
+tests/allure-results
+.cache
+*.pyc
+.idea
+.vscode
+conf/*.env
+*.log
+.pytest_cache

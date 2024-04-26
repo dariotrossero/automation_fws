@@ -16,6 +16,7 @@ class ButtonPage(BasePage):
     def primary_button_disabled(self) -> bool:
         self.driver.switch_to_iframe('css=#storybook-preview-iframe')
         self.driver.wait_for_element_exists(self._LINK_BUTTON)
+        self.driver.get_element(self._LINK_BUTTON)
         result = self.driver.is_element_enabled(self._PRIMARY_BUTTON_DISABLED) is False
         self.driver.switch_from_iframe()
         return result
@@ -34,17 +35,9 @@ class ButtonPage(BasePage):
         self.driver.switch_from_iframe()
         return result
 
-    def underline_link_button(self) -> bool:
+    def get_button_css_property(self, property: str) -> str:
         self.driver.switch_to_iframe('css=#storybook-preview-iframe')
         self.driver.wait_for_element_exists(self._LINK_BUTTON)
-        result = self.driver.get_element_css_property_value(self._LINK_BUTTON, "text-decoration") == "underline solid rgb(8, 71, 165)"
+        css_property = self.driver.get_element_css_property_value(self._LINK_BUTTON, property)
         self.driver.switch_from_iframe()
-        return result
-
-    def no_underline_link_button(self) -> bool:
-        self.driver.switch_to_iframe('css=#storybook-preview-iframe')
-        self.driver.wait_for_element_exists(self._LINK_BUTTON)
-        result = self.driver.get_element_css_property_value(self._LINK_BUTTON, "text-decoration") != "underline solid rgb(8, 71, 165)"
-        self.driver.switch_from_iframe()
-        return result
-
+        return css_property

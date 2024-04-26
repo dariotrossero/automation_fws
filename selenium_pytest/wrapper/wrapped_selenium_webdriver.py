@@ -272,3 +272,6 @@ class WrappedSeleniumWebdriver:
         except selenium_exceptions.NoSuchElementException:
             return False
         return True
+
+    def maximize_window(self) -> None:
+        self.driver.maximize_window()

@@ -12,6 +12,7 @@ class LabelPage(BasePage):
 
     def get_css_property(self, prop: str) -> str:
         self.driver.switch_to_iframe('css=#storybook-preview-iframe')
+        self.driver.wait_for_element_exists(self._DROPDOWN)
         value = self.webdriver.get_element_css_property_value(self._DROPDOWN, prop)
         self.driver.switch_from_iframe()
         return value

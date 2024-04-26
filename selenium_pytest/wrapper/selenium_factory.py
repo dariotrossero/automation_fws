@@ -1,8 +1,12 @@
 """Functions to create Selenium Webdriver or Appium instances."""
 
 import logging
+import os
 
 from selenium import webdriver as selenium_webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.remote.remote_connection import LOGGER
 
 from wrapper.wrapped_selenium_webdriver import WrappedSeleniumWebdriver
@@ -15,7 +19,11 @@ def create_wrapped_selenium_chrome_webdriver(
     """Return a wrapped version of the provided selenium webdriver.
 
     """
-    wrapped_webdriver = WrappedSeleniumWebdriver(selenium_webdriver.Chrome())
+    chrome_options: ChromeOptions = ChromeOptions()
+    # Configure Chrome to run in headless mode
+    if os.getenv("HEADLESS"):
+        chrome_options.add_argument('--headless')
+    wrapped_webdriver = WrappedSeleniumWebdriver(selenium_webdriver.Chrome(options=chrome_options))
     return wrapped_webdriver
 
 
@@ -24,5 +32,22 @@ def create_wrapped_selenium_gecko_webdriver(
     """Return a wrapped version of the provided selenium webdriver.
 
     """
-    wrapped_webdriver = WrappedSeleniumWebdriver(selenium_webdriver.Firefox())
+    firefox_options: FirefoxOptions = FirefoxOptions()
+    # Configure Firefox to run in headless mode
+    if os.getenv("HEADLESS"):
+        firefox_options.add_argument("--headless")
+    wrapped_webdriver = WrappedSeleniumWebdriver(selenium_webdriver.Firefox(options=firefox_options))
+    return wrapped_webdriver
+
+
+def create_wrapped_selenium_edge_webdriver(
+) -> WrappedSeleniumWebdriver:
+    """Return a wrapped version of the provided selenium webdriver.
+
+    """
+    edge_options: EdgeOptions = EdgeOptions()
+    # Configure Firefox to run in headless mode
+    if os.getenv("HEADLESS"):
+        edge_options.add_argument("--headless")
+    wrapped_webdriver = WrappedSeleniumWebdriver(selenium_webdriver.Edge(options=edge_options))
     return wrapped_webdriver

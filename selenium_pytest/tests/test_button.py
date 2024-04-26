@@ -9,7 +9,6 @@ class TestButton:
 
     def test_primary_button_disabled(self, button_page: ButtonPage):
         assert button_page.primary_button_disabled()
-        assert False
 
     def test_primary_button_enabled(self, button_page: ButtonPage):
         assert button_page.primary_button_enabled()

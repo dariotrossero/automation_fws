@@ -1,8 +1,8 @@
 import logging
-import os
 
 import pytest
 
+from conf.config import Config
 from pages.button_page import ButtonPage
 from pages.label_page import LabelPage
 from wrapper.selenium_factory import create_wrapped_selenium_chrome_webdriver, create_wrapped_selenium_gecko_webdriver, \
@@ -28,7 +28,7 @@ def button_page(webdriver: WrappedSeleniumWebdriver) -> ButtonPage:
 
 @pytest.fixture(scope="function", autouse=False)
 def webdriver() -> WrappedSeleniumWebdriver:
-    browser = os.getenv("BROWSER")
+    browser = Config.browser()
     try:
         if browser.lower() == 'firefox':
             return create_wrapped_selenium_gecko_webdriver()

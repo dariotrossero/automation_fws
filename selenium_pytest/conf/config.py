@@ -37,4 +37,10 @@ class Config:
 
     @classmethod
     def headless(cls) -> bool:
-        return cls._get_property('HEADLESS') is not None and cls._get_property('HEADLESS').lower() == 'true'
+        property = cls._get_property('HEADLESS')
+        return property is not None and property.lower() == 'true'
+
+    @classmethod
+    def save_screenshot(cls) -> bool:
+        property = cls._get_property('SAVE_SCREENSHOT_ON_FAILURE')
+        return property is not None and property.lower() == 'true'

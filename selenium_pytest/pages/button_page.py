@@ -14,7 +14,8 @@ class ButtonPage(BasePage):
         self.driver = webdriver
 
     def primary_button_disabled(self) -> bool:
-        self.driver.switch_to_iframe('css=#storybook-preview-iframe')
+        id="rifamd"
+        self.driver.get_element_coordinates("css=#uxexym")
         self.driver.wait_for_element_exists(self._LINK_BUTTON)
         self.driver.get_element(self._LINK_BUTTON)
         result = self.driver.is_element_enabled(self._PRIMARY_BUTTON_DISABLED) is False

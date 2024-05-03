@@ -2,6 +2,7 @@ import logging
 
 
 from pages.label_page import LabelPage
+from pages.stencil_home_page import StencilHomePage
 
 
 class TestLabel:
@@ -14,3 +15,6 @@ class TestLabel:
         label_page.have_css("font-family", "Montserrat")
         label_page.have_css("width", "442px")
         label_page.have_css("height", "26px")
+
+    def test_loc(self, stencil_home_page: StencilHomePage):
+        stencil_home_page.test()

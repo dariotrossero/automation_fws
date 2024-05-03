@@ -275,3 +275,21 @@ class WrappedSeleniumWebdriver:
 
     def maximize_window(self) -> None:
         self.driver.maximize_window()
+
+    def get_css_information(self, locator: str) -> dict[str:int]:
+        """
+        Returns the CSS information of the element such as width, height, border-radius, coordinates and paddings
+        """
+        element: WebElement = self._find_element(locator)
+        w = element.value_of_css_property("width").replace("px", "")
+        h = element.value_of_css_property("height").replace("px", "")
+        pl = int(element.value_of_css_property("padding-left").replace("px", ""))
+        pr = int(element.value_of_css_property("padding-right").replace("px", ""))
+        pt = int(element.value_of_css_property("padding-top").replace("px", ""))
+        pb = int(element.value_of_css_property("padding-bottom").replace("px", ""))
+        br = int(element.value_of_css_property("border-radius").replace("px", ""))
+        loc = element.location
+        x1 = int(loc["x"])
+        y1 = int(loc["y"])
+        return {"x1": x1, "y1": y1, "x2": x1 + float(w) , "y2": y1 + float(h), "width": w, "height": h,
+                "padding-left": pl, "padding-right": pr, "padding-top": pt, "padding-bottom": pb, "border-radius": br}

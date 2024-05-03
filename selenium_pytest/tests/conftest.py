@@ -5,6 +5,7 @@ import pytest
 from conf.config import Config
 from pages.button_page import ButtonPage
 from pages.label_page import LabelPage
+from pages.stencil_page import StencilPage
 from wrapper.selenium_factory import create_wrapped_selenium_chrome_webdriver, create_wrapped_selenium_gecko_webdriver, \
     create_wrapped_selenium_edge_webdriver
 from wrapper.wrapped_selenium_webdriver import WrappedSeleniumWebdriver
@@ -25,6 +26,11 @@ def button_page(webdriver: WrappedSeleniumWebdriver) -> ButtonPage:
     button_page.navigate()
     return button_page
 
+@pytest.fixture(scope="function", autouse=False)
+def stencil_page(webdriver: WrappedSeleniumWebdriver) -> StencilPage:
+    stencil_page = StencilPage(webdriver)
+    stencil_page.navigate()
+    return stencil_page
 
 @pytest.fixture(scope="function", autouse=False)
 def webdriver() -> WrappedSeleniumWebdriver:
@@ -66,6 +72,8 @@ def pytest_runtest_makereport(item):
 
         # Take screenshot
         try:
+            if not Config.save_screenshot():
+                return
             screenshot_path = f"screenshots/screenshot_{item.name}.png"
             driver.save_screenshot(screenshot_path)
             print(f"\nScreenshot saved as {screenshot_path}")

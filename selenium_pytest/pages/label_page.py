@@ -3,7 +3,7 @@ from wrapper.wrapped_selenium_webdriver import WrappedSeleniumWebdriver
 
 
 class LabelPage(BasePage):
-    _URL = BasePage._BASE_PATH + "?path=/story/coderfull-autocomplete--label"
+    _URL = BasePage._BASE_PATH
     _DROPDOWN = "css=input[id='headlessui-combobox-input-:r0:']"
 
     def __init__(self, webdriver: WrappedSeleniumWebdriver):

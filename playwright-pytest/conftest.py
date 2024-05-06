@@ -11,6 +11,7 @@ def label_page(page):
     label_page.open()
     return label_page
 
+
 @pytest.fixture(autouse=False)
 def stencil_home_page(page):
     stencil_home_page = StencilHomePage(page)
